@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -70,13 +71,32 @@ public class TaskManager {
         return tabZadan;
     }
 
+    public static String[][] odejmowanie(String[][] arr) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Which task to delate?");
+        int input = scan.nextInt();
+        String[][] temp = new String[arr.length - 1][arr[0].length];
+        int newIndex = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (i != input) {
+                for (int j = 0; j < arr[i].length; j++) {
+                    temp[newIndex][j] =arr[i][j];
+                }
+                newIndex++;
+            }
+        }
+tabZadan = Arrays.copyOf(temp,arr.length-1);
+        return tabZadan;
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
-        ConsoleColors color = new ConsoleColors();
+
+
         pobieranie(NAZWA_PLIKU);
         tabZadan = pobieranie(NAZWA_PLIKU);
 
 
-        System.out.println(color.BLUE + "Wybierz opcje:");
+        System.out.println(ConsoleColors.BLUE + "Wybierz opcje:");
         wydrukOpcji(opcje);
 
         Scanner scan = new Scanner(System.in);
@@ -93,13 +113,14 @@ public class TaskManager {
                     dodaj();
                     break;
                 case "remove":
+                odejmowanie(tabZadan);
                     break;
                 case "exit":
-                    scan.close();
+                    System.exit(0);
                 default:
                     System.out.println("Wybierz poprawna opcje");
             }
-            System.out.println(color.BLUE + "Wybierz opcje:");
+            System.out.println(ConsoleColors.BLUE + "Wybierz opcje:");
             wydrukOpcji(opcje);
 
         }
