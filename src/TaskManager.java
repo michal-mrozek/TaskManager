@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -89,6 +90,16 @@ tabZadan = Arrays.copyOf(temp,arr.length-1);
         return tabZadan;
     }
 
+    public static void zapisz(String[][] arr, String fileName) throws FileNotFoundException {
+        PrintWriter zapis = new PrintWriter(fileName);
+        String[] doPliku = new String[arr.length];
+        for (int i = 0; i < arr.length ; i++) {
+            doPliku[i] = String.join(",", arr[i]);
+            zapis.println(doPliku[i]);
+        }
+        zapis.close();
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
 
 
@@ -114,8 +125,11 @@ tabZadan = Arrays.copyOf(temp,arr.length-1);
                     break;
                 case "remove":
                 odejmowanie(tabZadan);
+                    System.out.println(ConsoleColors.WHITE + "Zadanie usuniete");
                     break;
                 case "exit":
+                    zapisz(tabZadan,NAZWA_PLIKU);
+                    System.out.println(ConsoleColors.RED + "Bajo!");
                     System.exit(0);
                 default:
                     System.out.println("Wybierz poprawna opcje");
